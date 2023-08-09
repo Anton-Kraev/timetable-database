@@ -6,7 +6,7 @@
 #### Для получения акутального состояния базы данных необходимо:
 1. Склонировать этот репозиторий
 ```
-https://github.com/MinyazevR/timetable-database.git
+git clone https://github.com/MinyazevR/timetable-database.git
 ```
 2. Install requirements
 ```
