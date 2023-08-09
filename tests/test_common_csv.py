@@ -261,13 +261,13 @@ EVENTS_INFO = [
 ]
 
 TEST_CASES = [
-    Case(data=USER_INFO, path_to_file="csv_for_test/Educator.csv"),
-    Case(data=GROUP_INFO, path_to_file="csv_for_test/Group.csv"),
+    Case(data=USER_INFO, path_to_file="tests/csv_for_test/Educator.csv"),
+    Case(data=GROUP_INFO, path_to_file="tests/csv_for_test/Group.csv"),
 ]
 
-EVENT_TEST_CASES = [Case(data=EVENTS_INFO, path_to_file="csv_for_test/Event.csv")]
-DIVISION_TEST_CASE = [Case(data=DIVISION_INFO, path_to_file="csv_for_test/Division.csv")]
-PROGRAM_TEST_CASE = [Case(data=PROGRAM_INFO, path_to_file="csv_for_test/Program.csv")]
+EVENT_TEST_CASES = [Case(data=EVENTS_INFO, path_to_file="tests/csv_for_test/Event.csv")]
+DIVISION_TEST_CASE = [Case(data=DIVISION_INFO, path_to_file="tests/csv_for_test/Division.csv")]
+PROGRAM_TEST_CASE = [Case(data=PROGRAM_INFO, path_to_file="tests/csv_for_test/Program.csv")]
 
 
 @pytest.mark.asyncio
@@ -311,8 +311,8 @@ async def test_get_event_info_in_csv(test: Case) -> None:
                          (frame['location'] == elem[3])]
         assert len(rows) == 1
         event_id = rows['id'].iloc[0]
-        user_to_event_frame = pandas.read_csv('csv_for_test/EducatorToEvent.csv')
-        group_to_event_frame = pandas.read_csv('csv_for_test/GroupToEvent.csv')
+        user_to_event_frame = pandas.read_csv('tests/csv_for_test/EducatorToEvent.csv')
+        group_to_event_frame = pandas.read_csv('tests/csv_for_test/GroupToEvent.csv')
         user_rows = user_to_event_frame.loc[(user_to_event_frame['educator_id'] == elem[4])
                                             & (user_to_event_frame['event_id'] == event_id)]
 
