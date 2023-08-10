@@ -64,11 +64,14 @@ async def process_tasks(task_list: list, db_session, user_ids: list[int], groups
     results = await asyncio.gather(*task_list, return_exceptions=True)
     task_list.clear()
     new_user_ids = []
-    for index, result in enumerate(results):
+    for index, result in enumerate(results)
         if isinstance(result, Exception):
             events_logger.error(f"{result}", exc_info=True)
             continue
         await events_handler(result, db_session, user_ids[index], groups)
+    user_ids.clear()
+    if len(task_list) > 0:
+        await process_tasks(task_list, db_session, new_user_ids, groups)
 
 
 async def proxy_handler(connector, part, groups, left_date, right_date) -> None:
@@ -92,14 +95,17 @@ def asyncio_starter(connector, part, groups, left_date, right_date) -> None:
     asyncio.run(proxy_handler(connector, part, groups, left_date, right_date))
 
 
-async def process_events(left_date: str, right_date: str, urls, user_row, groups) -> int:
+def process_events(left_date: str, right_date: str, urls, user_row, groups) -> int:
     """Function for event handling"""
     chunk_size = 500
     parts = mit.chunked(user_row, chunk_size)
-    index = 0
-    for index, part in enumerate(parts):
-        await proxy_handler(urls[index], part, groups, left_date, right_date)
-    return index
+    size = len(user_row) // 500
+    pool_size = size if len(user_row) % 500 == 0 else size + 1
+    with concurrent.futures.ProcessPoolExecutor(pool_size) as executor:
+        futures = [executor.submit(asyncio_starter, urls[index], part, groups, left_date, right_date)
+                   for index, part in enumerate(parts)]
+        concurrent.futures.wait(futures)
+    return len(futures)
 
 
 async def get_events_proxy_urls() -> list[str]:

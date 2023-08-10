@@ -40,17 +40,8 @@ async def process_tasks(task_list: list, indexes: list[int],  db_session, logger
     """A function for starting a task and handling an exception"""
     results = await asyncio.gather(*task_list, return_exceptions=True)
     task_list.clear()
-    new_idxs = []
     for index, result in enumerate(results):
-        if isinstance(result, aiohttp.ClientResponseError):
-            logger.error(f"{result}", exc_info=True)
-            task_list.append(result)
-            new_idxs.append(indexes[index])
-            continue
         if isinstance(result, Exception):
             logger.error(f"{result}", exc_info=True)
-            return
+            continue
         await func(result, indexes[index], db_session)
-    indexes.clear()
-    if len(task_list) > 0:
-        await process_tasks(task_list, new_idxs, db_session, logger, func)
