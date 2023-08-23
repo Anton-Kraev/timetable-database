@@ -69,6 +69,7 @@ async def process_tasks(task_list: list, db_session, user_ids: list[int], groups
             events_logger.error(f"{result}", exc_info=True)
             continue
         await events_handler(result, db_session, user_ids[index], groups)
+    user_ids.clear()
 
 
 async def proxy_handler(connector, part, groups, left_date, right_date) -> None:

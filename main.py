@@ -21,10 +21,8 @@ async def fill_users() -> None:
 
 
 async def fill_events():
-    #now = datetime.datetime.today()
-    #snd_date = now + datetime.timedelta(days=28)
-    now = datetime.datetime.strptime('2023-06-01', '%Y-%m-%d')
-    snd_date = datetime.datetime.strptime('2023-08-01', '%Y-%m-%d')
+    now = datetime.datetime.today()
+    snd_date = now + datetime.timedelta(days=28)
     urls = await get_events_proxy_urls()
     user_row, groups = await get_user_and_group_rows(now, snd_date)
     counter = await process_events(f"{now.year}-{now.month}-{now.day}", f"{snd_date.year}-{snd_date.month}-{snd_date.day}",
