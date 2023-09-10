@@ -4,10 +4,7 @@
 1. [Download and install Python](https://www.python.org/downloads/)
    
 #### Для получения акутального состояния базы данных необходимо:
-1. Склонировать этот репозиторий
-```
-git clone https://github.com/MinyazevR/timetable-database.git
-```
+1. Сделайте fork этого репозитория и склонируйте его.
 2. Install requirements
 ```
 pip install -r requirements.txt
