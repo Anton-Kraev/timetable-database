@@ -32,26 +32,28 @@ async def fill_event_table(logger: Logger, connection,
     :param subject: subject
     :param location: location"""
 
-    query = """WITH "ids" AS (
-INSERT INTO "Event" (start_time, end_time, description, location)
-VALUES($1, $2, $3, $4)
-ON CONFLICT (start_time, end_time, description, location)
-DO NOTHING
-RETURNING id
-) SELECT COALESCE (
-(SELECT id FROM "ids"),
-(SELECT id FROM "Event"
-Where start_time=($1) and end_time=($2)
-and description=($3) and location=($4)));"""
+    query = """WITH "ids" AS ( 
+INSERT INTO "Event" (start_time, end_time, description, location) 
+VALUES($1, $2, $3, $4) 
+ON CONFLICT (start_time, end_time, description, location) 
+DO NOTHING 
+RETURNING id 
+) SELECT COALESCE ( 
+(SELECT id FROM "ids"), 
+(SELECT id FROM "Event" 
+Where start_time = ($1) and end_time = ($2) 
+and description = ($3) and location = ($4)));"""
 
     for i in range(2):
-        result = await connection.fetchrow(logger, connection, query,
-                                           [(dt_start, dt_end, subject, location)])
-        if result is None or (current_id := result['id']) is None:
+        result = await connection.fetchrow(query, dt_start,
+                                           dt_end, subject, location)
+        if result is None or 'id' not in result:
             continue
+        else:
+            current_id = result['id']
         return current_id
 
-    raise asyncpg.NoDataFoundError()
+    logger.error(f"asyncpg.NoDataFoundError", exc_info=True)
 
 
 async def delete_events(logger: Logger, connection,

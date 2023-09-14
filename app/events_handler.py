@@ -161,7 +161,7 @@ async def process_events(left_date: datetime.datetime,
             str_right_date = datetime.datetime.strftime(right_date, '%Y-%m-%d')
 
             user_ids = await get_educators_ids(connection)
-            chunk_size = 500
+            chunk_size = 1000
             parts = mit.chunked(user_ids, chunk_size)
 
         for index, part in enumerate(parts):
