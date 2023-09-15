@@ -30,12 +30,11 @@ async def execute(logger: logging.Logger,
 
     try:
         async with connection.transaction():
-            result = await connection.executemany(txt, args)
+            await connection.executemany(txt, args)
     except IntegrityConstraintViolationError:
         logger.error("asyncpg.IntegrityConstraintViolationError",
                      exc_info=True)
         return
-    return result
 
 
 async def process_tasks(task_list: list[asyncio.Task[str]],
