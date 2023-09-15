@@ -10,7 +10,8 @@ from app.models.educator import fill_educator_table, get_educators_ids
 from app.models.event import delete_events, fill_event_table
 from app.models.educator_to_event import fill_educator_to_event_table
 from app.models.group_to_event import fill_group_to_event_table
-from app.models.address import fill_address_table
+from app.models.address import fill_address_table, get_addresses_oid_to_id_dict
+from app.models.classroom import fill_classroom_table
 
 
 def create_asyncpg_pool():

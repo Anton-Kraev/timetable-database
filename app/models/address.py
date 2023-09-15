@@ -26,3 +26,11 @@ async def fill_address_table(logger: logging.Logger, connection, oid: str, name:
                    VALUES($1, $2, $3)
                    ON CONFLICT (oid) DO NOTHING;""",
                   [(oid, name, matches)])
+
+
+async def get_addresses_oid_to_id_dict(connection) -> dict[str, int]:
+    """Function for getting addresses oid -> id dict
+    :param param connection: current database connection"""
+
+    return {record['oid']: record['id'] for record in
+            (await connection.fetch("""SELECT Oid, id FROM "Address";"""))}

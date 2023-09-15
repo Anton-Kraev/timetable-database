@@ -8,11 +8,13 @@ from app.groups_handler import process_groups
 from app.events_handler import process_events
 from app.educator_handler import process_all_names
 from app.address_handler import process_addresses
+from app.classroom_handler import process_classrooms
 from app import create_asyncpg_pool
 
 
 async def fill_users() -> None:
     async with create_asyncpg_pool() as pool:
+        await process_classrooms(pool)
         await process_addresses(pool)
         await process_divisions(pool)
         await process_programs(pool)
