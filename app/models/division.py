@@ -7,7 +7,7 @@ class Division(Base):
 
     __tablename__ = "Division"
     id = Column(Integer, primary_key=True)
-    oid = Column(String(40))
+    oid = Column(String(40), unique=True)
     alias = Column(String(16))
     name = Column(String(70))
 
@@ -24,7 +24,7 @@ async def fill_division_table(logger: Logger, connection,
     await execute(logger, connection,
                   """INSERT INTO "Division"(oid, alias, name)
                    VALUES($1, $2, $3)
-                   ON CONFLICT (alias) DO NOTHING;""",
+                   ON CONFLICT (oid) DO NOTHING;""",
                   [(oid, alias, name)])
 
 
