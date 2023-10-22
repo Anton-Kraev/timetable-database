@@ -4,7 +4,7 @@
 1. [Download and install Python](https://www.python.org/downloads/)
    
 #### Для получения акутального состояния базы данных необходимо:
-1. Сделайте fork этого репозитория и склонируйте его.
+1. Сделать fork этого репозитория и склонировать его.
 2. Install requirements
 ```
 pip install -r requirements.txt
