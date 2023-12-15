@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 
-from api.group import router as group_router
-from api.educator import router as educator_router
+from .group import router as group_router
+from .educator import router as educator_router
 
 app = FastAPI(title='Timetable API')
 
