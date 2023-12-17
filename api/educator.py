@@ -1,13 +1,24 @@
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy import select
+from sqlalchemy import select, join
 from sqlalchemy.ext.asyncio import AsyncSession
 from starlette import status
 
 from app.models.educator import Educator
+from app.models.educator_to_event import EducatorToEvent
+from app.models.event import Event
 from .database import get_async_session
-from .schemas import EventListResponse
+from .schemas import EventListResponse, EducatorListResponse
 
 router = APIRouter()
+
+
+@router.get("/all", response_model=EducatorListResponse)
+async def all_educators(session: AsyncSession = Depends(get_async_session)):
+    stmt = select(Educator)
+    result = await session.execute(stmt)
+    educators = result.scalars().all()
+
+    return EducatorListResponse(educators=educators)
 
 
 @router.get("/find", response_model=int)
@@ -26,5 +37,11 @@ async def educator_id_by_name(first_name: str, last_name: str, middle_name: str,
 
 
 @router.get("/{educator_id}/events", response_model=EventListResponse)
-async def get_educator_events(group_id: int, session: AsyncSession = Depends(get_async_session)):
-    ...
+async def get_educator_events(educator_id: int, session: AsyncSession = Depends(get_async_session)):
+    stmt = select(Event).select_from(
+        join(Event, EducatorToEvent, Event.id == EducatorToEvent.event_id)
+    ).where(EducatorToEvent.educator_id == educator_id)
+    result = await session.execute(stmt)
+    events = result.scalars().all()
+
+    return EventListResponse(events=events)

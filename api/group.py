@@ -1,13 +1,24 @@
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy import select
+from sqlalchemy import select, join
 from sqlalchemy.ext.asyncio import AsyncSession
 from starlette import status
 
+from app.models.event import Event
 from app.models.group import Group
+from app.models.group_to_event import GroupToEvent
 from .database import get_async_session
-from .schemas import EventListResponse
+from .schemas import EventListResponse, GroupListResponse
 
 router = APIRouter()
+
+
+@router.get("/all", response_model=GroupListResponse)
+async def all_groups(session: AsyncSession = Depends(get_async_session)):
+    stmt = select(Group)
+    result = await session.execute(stmt)
+    groups = result.scalars().all()
+
+    return GroupListResponse(groups=groups)
 
 
 @router.get("/find",  response_model=int)
@@ -23,5 +34,11 @@ async def group_id_by_name(name: str, session: AsyncSession = Depends(get_async_
 
 
 @router.get("/{group_id}/events", response_model=EventListResponse)
-async def get_group_events(group_id: int):
-    ...
+async def get_group_events(group_id: int, session: AsyncSession = Depends(get_async_session)):
+    stmt = select(Event).select_from(
+        join(Event, GroupToEvent, Event.id == GroupToEvent.event_id)
+    ).where(GroupToEvent.group_id == group_id)
+    result = await session.execute(stmt)
+    events = result.scalars().all()
+
+    return EventListResponse(events=events)
