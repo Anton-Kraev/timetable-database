@@ -6,3 +6,6 @@ tenacity>=8.2.3
 pytest>=7.4.0
 pandas>=2.0.3
 alembic>=1.11.1
+aiohttp_socks>=0.8.4
+more_itertools>=10.1.0
+fastapi>=0.104.1
