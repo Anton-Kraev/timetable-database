@@ -36,6 +36,35 @@ class GroupBaseSchema(BaseModel):
     model_config = config
 
 
+# class AddressBaseSchema(BaseModel):
+#     id: int
+#     oid: str | None = None
+#     name: str
+#     matches: int | None = None
+#
+#     model_config = config
+#
+#
+# class ClassroomBaseSchema(BaseModel):
+#     id: int
+#     oid: str | None = None
+#     name: str
+#     capacity: int | None = None
+#     seating_type: int | None = None
+#     additional_info: str | None = None
+#     address_id: int
+#
+#     model_config = config
+#
+#
+# class ClassroomListResponse(BaseModel):
+#     groups: List[ClassroomBaseSchema]
+#
+#
+# class AddressListResponse(BaseModel):
+#     groups: List[AddressBaseSchema]
+
+
 class GroupListResponse(BaseModel):
     groups: List[GroupBaseSchema]
 
