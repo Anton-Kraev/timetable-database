@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from routers import group_router, educator_router, address_router, classroom_router
+from api.routers import group_router, educator_router, address_router, classroom_router
 
 
 app = FastAPI(title='Timetable API')
