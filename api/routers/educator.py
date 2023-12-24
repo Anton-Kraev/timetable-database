@@ -31,13 +31,16 @@ async def educator_id_by_name(first_name: str, last_name: str, middle_name: str,
     educator_id = result.scalar_one_or_none()
 
     if not educator_id:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail=f'No educator with name {first_name} {last_name} {middle_name} found')
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f'No educator with name {first_name} {last_name} {middle_name} found'
+        )
     return educator_id
 
 
 @router.get("/{educator_id}/events", response_model=EventListResponse)
-async def get_educator_events(educator_id: int, session: AsyncSession = Depends(get_async_session)):
+async def get_educator_events(educator_id: int,
+                              session: AsyncSession = Depends(get_async_session)):
     stmt = select(Event).select_from(
         join(Event, EducatorToEvent, Event.id == EducatorToEvent.event_id)
     ).where(EducatorToEvent.educator_id == educator_id)
