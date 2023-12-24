@@ -3,7 +3,7 @@ import logging
 from . import Base, Column, Integer, String, ForeignKey, execute
 
 
-class Address(Base):
+class Classroom(Base):
     """A table representing the Classroom entity"""
 
     __tablename__ = "Classroom"

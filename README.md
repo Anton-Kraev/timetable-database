@@ -27,3 +27,10 @@ alembic upgrade head
 python3 main.py users
 python3 main.py events
 ```
+
+#### API:
+1. Запуск сервера локально в режиме разработки (приложение запустится на 8000 порту)
+```
+uvicorn api.main:app --reload
+```
+2. [Документация](http://127.0.0.1:8000/docs)
