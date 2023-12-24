@@ -9,8 +9,8 @@ from starlette.exceptions import HTTPException
 
 from app.models.classroom import Classroom
 from app.models.event import Event
-from .database import get_async_session
-from .schemas import ClassroomListResponse, EventListResponse
+from api.database import get_async_session
+from api.schemas import ClassroomListResponse, EventListResponse
 
 router = APIRouter()
 

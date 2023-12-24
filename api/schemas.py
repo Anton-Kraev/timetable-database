@@ -8,12 +8,11 @@ config = ConfigDict(
 )
 
 
-class EventBaseSchema(BaseModel):
+class GroupBaseSchema(BaseModel):
     id: int
-    start_time: datetime
-    end_time: datetime
-    description: str | None = None
-    location: str | None = None
+    name: str
+    type: str | None = None
+    program_id: int | None = None
 
     model_config = config
 
@@ -27,11 +26,12 @@ class EducatorBaseSchema(BaseModel):
     model_config = config
 
 
-class GroupBaseSchema(BaseModel):
+class EventBaseSchema(BaseModel):
     id: int
-    name: str
-    type: str | None = None
-    program_id: int | None = None
+    start_time: datetime
+    end_time: datetime
+    description: str | None = None
+    location: str | None = None
 
     model_config = config
 
@@ -57,14 +57,6 @@ class ClassroomBaseSchema(BaseModel):
     model_config = config
 
 
-class ClassroomListResponse(BaseModel):
-    classrooms: List[ClassroomBaseSchema]
-
-
-class AddressListResponse(BaseModel):
-    addresses: List[AddressBaseSchema]
-
-
 class GroupListResponse(BaseModel):
     groups: List[GroupBaseSchema]
 
@@ -75,3 +67,11 @@ class EducatorListResponse(BaseModel):
 
 class EventListResponse(BaseModel):
     events: List[EventBaseSchema]
+
+
+class AddressListResponse(BaseModel):
+    addresses: List[AddressBaseSchema]
+
+
+class ClassroomListResponse(BaseModel):
+    classrooms: List[ClassroomBaseSchema]

@@ -3,8 +3,8 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.address import Address
-from .database import get_async_session
-from .schemas import AddressListResponse
+from api.database import get_async_session
+from api.schemas import AddressListResponse
 
 router = APIRouter()
 

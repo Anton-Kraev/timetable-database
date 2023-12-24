@@ -6,8 +6,8 @@ from starlette import status
 from app.models.event import Event
 from app.models.group import Group
 from app.models.group_to_event import GroupToEvent
-from .database import get_async_session
-from .schemas import EventListResponse, GroupListResponse
+from api.database import get_async_session
+from api.schemas import EventListResponse, GroupListResponse
 
 router = APIRouter()
 

@@ -6,8 +6,8 @@ from starlette import status
 from app.models.educator import Educator
 from app.models.educator_to_event import EducatorToEvent
 from app.models.event import Event
-from .database import get_async_session
-from .schemas import EventListResponse, EducatorListResponse
+from api.database import get_async_session
+from api.schemas import EventListResponse, EducatorListResponse
 
 router = APIRouter()
 
