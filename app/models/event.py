@@ -38,11 +38,11 @@ VALUES($1, $2, $3, $4)
 ON CONFLICT (start_time, end_time, description, location) 
 DO NOTHING 
 RETURNING id 
-) SELECT COALESCE ( 
+) SELECT COALESCE( 
 (SELECT id FROM "ids"), 
 (SELECT id FROM "Event" 
 Where start_time = ($1) and end_time = ($2) 
-and description = ($3) and location = ($4)));"""
+and description = ($3) and location = ($4))) AS id;"""
 
     for i in range(2):
         result = await connection.fetchrow(query, dt_start,

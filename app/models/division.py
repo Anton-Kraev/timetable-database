@@ -23,8 +23,7 @@ async def fill_division_table(logger: Logger, connection,
 
     await execute(logger, connection,
                   """INSERT INTO "Division"(oid, alias, name)
-                   VALUES($1, $2, $3)
-                   ON CONFLICT (oid) DO NOTHING;""",
+                   VALUES($1, $2, $3)""",
                   [(oid, alias, name)])
 
 

@@ -3,11 +3,11 @@ import asyncio
 import logging
 import typing as tp
 
-from tenacity import retry, wait_exponential
+from tenacity import retry, wait_exponential, stop_after_attempt
 from asyncpg import IntegrityConstraintViolationError
 
 
-@retry(wait=wait_exponential(multiplier=1, min=1, max=4))
+@retry(wait=wait_exponential(multiplier=1, min=1, max=4), stop=stop_after_attempt(5))
 async def get_response_text(url: str, session: aiohttp.ClientSession) -> str:
     """Function for getting result of get requests
     :param url: str for aiohttp response

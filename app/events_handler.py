@@ -13,7 +13,7 @@ from app import (create_asyncpg_pool,
                  delete_events,
                  fill_event_table,
                  get_educators_ids,
-                 get_alias_to_id_dict,
+                 get_group_table_dict,
                  fill_educator_to_event_table,
                  fill_group_to_event_table)
 
@@ -119,7 +119,7 @@ async def proxy_task(connector: str,
 
         async with pool.acquire() as connection:
 
-            groups = await get_alias_to_id_dict(connection)
+            groups = await get_group_table_dict(connection)
             task_list = []
             items = []
             for item in part:

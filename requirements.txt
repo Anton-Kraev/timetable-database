@@ -9,3 +9,5 @@ alembic>=1.11.1
 aiohttp_socks>=0.8.4
 more_itertools>=10.1.0
 fastapi>=0.104.1
+starlette>=0.27.0
+pydantic>=2.5.2

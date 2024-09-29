@@ -65,7 +65,7 @@ async def process_groups(pool: Pool) -> None:
     tasks = []
 
     for index, part in enumerate(parts):
-        connector = ProxyConnector.from_url(all_connectors[index])
+        connector = ProxyConnector.from_url(all_connectors[index % 2])
         tasks.append(asyncio.create_task(
             proxy_task(connector, pool, part)))
 

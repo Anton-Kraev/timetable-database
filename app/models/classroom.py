@@ -9,10 +9,10 @@ class Classroom(Base):
     __tablename__ = "Classroom"
     id = Column(Integer, primary_key=True)
     oid = Column(String(40), unique=True)
-    name = Column(String(10))
+    name = Column(String(100))
     capacity = Column(Integer)
     seating_type = Column(Integer)
-    additional_info = Column(String(150))
+    additional_info = Column(String())
     address_id = Column(Integer,
                         ForeignKey('Address.id', ondelete='CASCADE'))
 
@@ -29,6 +29,7 @@ async def fill_classroom_table(logger: logging.Logger, connection, oid: str,
     :param capacity: classroom capacity
     :param additional_info: classroom additional info
     :param address_id: address id"""
+    additional_info = additional_info and additional_info[:300]
 
     await execute(logger, connection,
                   """INSERT INTO "Classroom"(oid, name, capacity, seating_type, additional_info, address_id)
