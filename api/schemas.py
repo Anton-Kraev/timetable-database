@@ -75,3 +75,7 @@ class AddressListResponse(BaseModel):
 
 class ClassroomListResponse(BaseModel):
     classrooms: List[ClassroomBaseSchema]
+
+
+class ClassroomNameListResponse(BaseModel):
+    classrooms: List[str]

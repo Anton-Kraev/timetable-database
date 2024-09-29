@@ -12,7 +12,7 @@ from api.schemas import EventListResponse, GroupListResponse
 router = APIRouter()
 
 
-@router.get("/all", response_model=GroupListResponse)
+@router.get("/", response_model=GroupListResponse)
 async def all_groups(session: AsyncSession = Depends(get_async_session)):
     stmt = select(Group)
     result = await session.execute(stmt)

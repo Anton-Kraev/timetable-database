@@ -12,7 +12,7 @@ from api.schemas import EventListResponse, EducatorListResponse
 router = APIRouter()
 
 
-@router.get("/all", response_model=EducatorListResponse)
+@router.get("/", response_model=EducatorListResponse)
 async def all_educators(session: AsyncSession = Depends(get_async_session)):
     stmt = select(Educator)
     result = await session.execute(stmt)
